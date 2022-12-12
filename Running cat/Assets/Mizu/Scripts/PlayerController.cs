@@ -8,25 +8,30 @@ namespace Mizu
     {
         private Vector3 _inputVec = Vector3.zero;
         private Vector3 _dragVec = Vector3.zero;
+        private float turnAngle = 45f;
+
+        private PlayerCat[] cats;
 
         private void Update()
         {
+            GetCats();
+            if (cats.Length < 1) return;
             OnAutoMove();
             OnDrag();
         }
 
-        private void OnAutoMove()
+        private void GetCats()
         {
             PlayerCat[] cats = GetComponentsInChildren<PlayerCat>();
-            if (cats.Length < 1) return;
+        }
+
+        private void OnAutoMove()
+        {
             transform.position += transform.forward * Time.deltaTime * 5f;
         }
 
         private void OnDrag()
         {
-            PlayerCat[] cats = GetComponentsInChildren<PlayerCat>();
-            if (cats.Length < 1) return;
-
             if (Input.GetMouseButtonDown(0))
             {
                 _inputVec = Input.mousePosition;
@@ -39,14 +44,14 @@ namespace Mizu
                 if (dir < 0f)
                 {
                     foreach (var cat in cats)
-                        cat.TurnLeft();
+                        cat.TurnAngle(-turnAngle);
 
                     transform.position += -transform.right * Time.deltaTime * 10f;
                 }
                 else if (dir > 0f)
                 {
                     foreach (var cat in cats)
-                        cat.TurnRight();
+                        cat.TurnAngle(turnAngle);
 
                     transform.position += transform.right * Time.deltaTime * 10f;
                 }
@@ -55,7 +60,7 @@ namespace Mizu
             if (Input.GetMouseButtonUp(0))
             {
                 foreach (var cat in cats)
-                    cat.LookForward();
+                    cat.TurnAngle();
             }
         }
     }

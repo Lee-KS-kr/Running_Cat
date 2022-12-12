@@ -36,6 +36,11 @@ public class PlayerCat : MonoBehaviour
         }
     }
 
+    public void TurnAngle(float yAngle = 0)
+    {
+        transform.rotation = Quaternion.Euler(0, -yAngle, 0);
+    }
+
     public void TurnLeft()
     {
         transform.rotation = Quaternion.Euler(0, -45f, 0);
