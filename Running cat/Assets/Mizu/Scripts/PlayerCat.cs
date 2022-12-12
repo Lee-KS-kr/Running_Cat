@@ -7,21 +7,25 @@ public class PlayerCat : MonoBehaviour
     private int _obstacleLayer = 0;
     private int _strayLayer = 0;
     private int _playingLayer = 0;
+    [SerializeField] private Material _mat;
 
     private void Start()
     {
         _obstacleLayer = LayerMask.NameToLayer("Obstacle");
         _playingLayer = LayerMask.NameToLayer("Playing");
         _strayLayer = LayerMask.NameToLayer("Stray");
+        _mat = Resources.Load<Material>("Otter/Arts/Texture/NewCat");
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == _strayLayer)
         {
-            collision.gameObject.layer = gameObject.layer;
-            collision.gameObject.transform.parent = gameObject.transform.parent;
-            collision.gameObject.AddComponent<PlayerCat>();
+            var obj = collision.gameObject;
+            obj.layer = gameObject.layer;
+            obj.transform.parent = gameObject.transform.parent;
+            obj.AddComponent<PlayerCat>();
+            obj.GetComponent<Renderer>().material = _mat;
         }
 
         if (collision.gameObject.layer == _obstacleLayer)
@@ -34,16 +38,16 @@ public class PlayerCat : MonoBehaviour
 
     public void TurnLeft()
     {
-        transform.rotation = Quaternion.Euler(0, 90f - 45f, 90f);
+        transform.rotation = Quaternion.Euler(0, -45f, 0);
     }
 
     public void TurnRight()
     {
-        transform.rotation = Quaternion.Euler(0, 90f + 45f, 90f);
+        transform.rotation = Quaternion.Euler(0, 45f, 0);
     }
 
     public void LookForward()
     {
-        transform.rotation = Quaternion.Euler(0, 90f, 90f);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 }

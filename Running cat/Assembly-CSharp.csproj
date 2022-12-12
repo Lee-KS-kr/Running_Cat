@@ -95,6 +95,8 @@
     <Compile Include="Assets/Mizu/Scripts/Obstacle.cs" />
     <Compile Include="Assets/Mizu/Scripts/PlayerCat.cs" />
     <Compile Include="Assets/Mizu/Scripts/Goal.cs" />
+    <Compile Include="Assets/Mizu/Scripts/GameManager.cs" />
+    <Compile Include="Assets/Mizu/Scripts/StageManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
