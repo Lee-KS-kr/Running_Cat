@@ -2538,7 +2538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1255155576
 Transform:
   m_ObjectHideFlags: 0
@@ -2740,8 +2740,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {x: 0, y: 0, z: 0}
-  _offset: {x: 0, y: 6.2, z: -5}
-  _afterGoalPos: {x: 10.5938, y: 6.2, z: 2.02943}
   isEnding: 0
 --- !u!1001 &1333726361
 PrefabInstance:

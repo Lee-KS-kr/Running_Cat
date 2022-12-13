@@ -8037,3 +8037,78 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001598 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16dd9b000 may have been prematurely finalized
+Symbol file LoadedFromMemory doesn't match image /Users/academy.5/Running_Cat/Running cat/Library/PackageCache/com.unity.visualscripting@1.7.8/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image /Users/academy.5/Running_Cat/Running cat/Library/PackageCache/com.unity.visualscripting@1.7.8/Editor/VisualScripting.Core/Dependencies/DotNetZip/Unity.VisualScripting.IonicZip.dll
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.72 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.626 seconds
+Domain Reload Profiling:
+	ReloadAssembly (626ms)
+		BeginReloadAssembly (76ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (26ms)
+		EndReloadAssembly (494ms)
+			LoadAssemblies (31ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (184ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (35ms)
+			SetupLoadedEditorAssemblies (207ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (7ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (45ms)
+				ProcessInitializeOnLoadAttributes (135ms)
+				ProcessInitializeOnLoadMethodAttributes (18ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (3ms)
+Platform modules already initialized, skipping
+Callback registration failed. Increase kMaxCallback.
+Fatal Error! Callback registration failed. Increase kMaxCallback.
+Obtained 31 stack frames.
+#0  0x000001b546ed98 in __pthread_kill
+#1  0xe7640001b53de340 in abort
+#2  0x9c1380010495f6b4 in _GLOBAL__sub_I_BugReportingTools.mm
+#3  0x0000010375a314 in EditorMonoConsole::LogToConsoleImplementation(CppLogEntry&)
+#4  0x00000103759aa0 in EditorMonoConsole::LogToConsoleImplementation(DebugStringToFileData const&)
+#5  0x0000010375aef4 in LogToConsoleImplementation(DebugStringToFileData const&)
+#6  0x000001043cfd44 in DebugStringToFilePostprocessedStacktrace(DebugStringToFileData const&)
+#7  0x000001043d02c8 in DebugStringToFile(DebugStringToFileData const&)
+#8  0x0000010316b9e8 in CallbackArrayBase<void (*)(BuildTargetPlatform), void (*)(void const*, BuildTargetPlatform)>::Register(void (*)(BuildTargetPlatform), void (*)(void const*, BuildTargetPlatform), void const*)
+#9  0x000001038318d8 in LoadDomainAndUserAssemblies()
+#10 0x00000103833954 in LoadUserAssemblies()
+#11 0x00000104058af8 in AssetImportWorkerClient::ReloadMonoDomain(AssetResolver&)
+#12 0x000001040685a8 in invocation function for block in AssetImportWorkerClient::HandleMessage(PrepareMessage const&)::$_4::operator()() const
+#13 0x000001b52e01b4 in _dispatch_client_callout
+#14 0x663f8001b52ef4ec in _dispatch_async_and_wait_invoke
+#15 0x61460001b52e01b4 in _dispatch_client_callout
+#16 0x686c8001b52ee6cc in _dispatch_main_queue_drain
+#17 0xdf2a0001b52ee31c in _dispatch_main_queue_callback_4CF
+#18 0xf16e0001b55b2998 in __CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__
+#19 0x305b8001b556fc08 in __CFRunLoopRun
+#20 0x93640001b556ea84 in CFRunLoopRunSpecific
+#21 0xbf0c0001be1ae338 in RunCurrentEventLoopInMode
+#22 0xe27b8001be1ae0b4 in ReceiveNextEventCommon
+#23 0xba290001be1ade68 in _BlockUntilNextEventMatchingListInModeWithFilter
+#24 0xf8778001b80d651c in _DPSNextEvent
+#25 0x63348001b80d4e14 in -[NSApplication(NSEvent) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]
+#26 0x37378001b80c6fe0 in -[NSApplication run]
+#27 0xc1050001b80986fc in NSApplicationMain
+#28 0xbd0380010496e738 in EditorMain(int, char const**)
+#29 0x0000010496ea70 in main
+#30 0x00000107f5508c in (Unknown)

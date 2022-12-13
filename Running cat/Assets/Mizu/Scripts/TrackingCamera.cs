@@ -7,8 +7,8 @@ namespace Mizu
     public class TrackingCamera : MonoBehaviour
     {
         [SerializeField] private Vector3 _player;
-        [SerializeField] private Vector3 _offset = new Vector3(0, 6.2f, -5f);
-        [SerializeField] private Vector3 _afterGoalPos = new Vector3(10.5938f, 6.2f, 2.02954f);
+        private Vector3 _offset = new Vector3(0, 6.2f, -5f);
+        private Vector3 _afterGoalPos = new Vector3(10.5938f, 3f, 2.02954f);
         private Quaternion _afterGoalRot = Quaternion.Euler(0, -90f, 0f);
 
         public bool isEnding = false;
