@@ -19,8 +19,7 @@ namespace Mizu
         {
             if(other.gameObject.layer == _playerLayer)
             {
-                Debug.Log("Player Goal");
-                Time.timeScale = 0f;
+                this.enabled = false;
                 playerGoalAction?.Invoke();
             }
         }

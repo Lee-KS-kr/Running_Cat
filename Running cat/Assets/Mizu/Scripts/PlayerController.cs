@@ -8,26 +8,51 @@ namespace Mizu
     {
         private Vector3 _inputVec = Vector3.zero;
         private Vector3 _dragVec = Vector3.zero;
-        private float turnAngle = 45f;
+        private float _turnAngle = 45f;
+        private float _moveSpeed = 5f;
 
         private PlayerCat[] cats;
+        private TrackingCamera _cam;
+
+        private void Start()
+        {
+            _cam = Camera.main.GetComponent<TrackingCamera>();
+        }
 
         private void Update()
         {
             GetCats();
             if (cats.Length < 1) return;
+            SetCamPos();
             OnAutoMove();
             OnDrag();
         }
 
         private void GetCats()
         {
-            PlayerCat[] cats = GetComponentsInChildren<PlayerCat>();
+            cats = GetComponentsInChildren<PlayerCat>();
+        }
+
+        private void SetCamPos()
+        {
+            if (cats.Length == 1)
+                _cam.SetPlayer(cats[0].transform.position);
+            else
+            {
+                var pos = Vector3.zero;
+                foreach (var cat in cats)
+                    pos += cat.transform.position;
+
+                pos = new Vector3(pos.x / cats.Length, pos.y/cats.Length, pos.z / cats.Length);
+                _cam.SetPlayer(pos);
+            }
         }
 
         private void OnAutoMove()
         {
-            transform.position += transform.forward * Time.deltaTime * 5f;
+            transform.position += transform.forward * Time.deltaTime * _moveSpeed;
+            foreach (var cat in cats)
+                cat.SetMoveAnim(true);
         }
 
         private void OnDrag()
@@ -44,14 +69,14 @@ namespace Mizu
                 if (dir < 0f)
                 {
                     foreach (var cat in cats)
-                        cat.TurnAngle(-turnAngle);
+                        cat.TurnAngle(-_turnAngle);
 
                     transform.position += -transform.right * Time.deltaTime * 10f;
                 }
                 else if (dir > 0f)
                 {
                     foreach (var cat in cats)
-                        cat.TurnAngle(turnAngle);
+                        cat.TurnAngle(_turnAngle);
 
                     transform.position += transform.right * Time.deltaTime * 10f;
                 }
@@ -60,8 +85,15 @@ namespace Mizu
             if (Input.GetMouseButtonUp(0))
             {
                 foreach (var cat in cats)
-                    cat.TurnAngle();
+                    cat.ResetTurn();
             }
+        }
+
+        public void OnEndingScene()
+        {
+            _moveSpeed = 0f;
+            foreach (var cat in cats)
+                cat.SetAnimSpeed(4);
         }
     }
 }

@@ -2,57 +2,102 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCat : MonoBehaviour
+namespace Mizu
 {
-    private int _obstacleLayer = 0;
-    private int _strayLayer = 0;
-    private int _playingLayer = 0;
-    [SerializeField] private Material _mat;
-
-    private void Start()
+    public class PlayerCat : MonoBehaviour
     {
-        _obstacleLayer = LayerMask.NameToLayer("Obstacle");
-        _playingLayer = LayerMask.NameToLayer("Playing");
-        _strayLayer = LayerMask.NameToLayer("Stray");
-        _mat = Resources.Load<Material>("Otter/Arts/Texture/NewCat");
-    }
+        private int _strayLayer = 0;
+        private int _playingLayer = 0;
+        private int _catTowerLayer = 0;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer == _strayLayer)
+        private int hashMove = Animator.StringToHash("isMove");
+        private int hashJump = Animator.StringToHash("onJump");
+        private bool isJump = false;
+
+        [SerializeField] private Material _mat;
+        private Animator _animator;
+        private Rigidbody _rigidbody;
+        private Quaternion _before = Quaternion.Euler(0, 0, 0);
+        private Quaternion _new = Quaternion.Euler(0, 0, 0);
+        private Vector3 _newPos = Vector3.zero;
+
+        private void Start()
         {
-            var obj = collision.gameObject;
-            obj.layer = gameObject.layer;
-            obj.transform.parent = gameObject.transform.parent;
-            obj.AddComponent<PlayerCat>();
-            obj.GetComponent<Renderer>().material = _mat;
+            _playingLayer = LayerMask.NameToLayer("Playing");
+            _strayLayer = LayerMask.NameToLayer("Stray");
+            _catTowerLayer = LayerMask.NameToLayer("CatTower");
+            _mat = Resources.Load<Material>("Otter/Arts/Texture/NewCat");
+            _rigidbody = gameObject.GetComponent<Rigidbody>();
+            _animator = gameObject.GetComponent<Animator>();
         }
 
-        if (collision.gameObject.layer == _obstacleLayer)
+        private void Update()
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, _new, 3 * Time.deltaTime);
+            //if (!isJump) return;
+            //OnJump();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.layer == _strayLayer)
+            {
+                var obj = collision.gameObject;
+                obj.layer = gameObject.layer;
+                obj.transform.parent = gameObject.transform.parent;
+                obj.AddComponent<PlayerCat>();
+                obj.GetComponent<Animator>().enabled = true;
+                obj.GetComponentInChildren<Renderer>().material = _mat;
+            }
+
+            if(collision.gameObject.layer == _catTowerLayer)
+            {
+                //isJump = false;
+                //_newPos = transform.position + new Vector3(0, 5f, 0);
+                //isJump = true;
+                //_animator.SetTrigger(hashJump);
+                OnJump();
+            }
+        }
+
+        private void OnDisable()
         {
             gameObject.layer = _playingLayer;
             gameObject.transform.parent = null;
-            this.enabled = false;
+            gameObject.GetComponent<Collider>().enabled = false;
+            gameObject.GetComponent<Rigidbody>().useGravity = false;
         }
-    }
 
-    public void TurnAngle(float yAngle = 0)
-    {
-        transform.rotation = Quaternion.Euler(0, -yAngle, 0);
-    }
+        private void OnJump()
+        {
+            //transform.position = Vector3.Lerp(transform.position, _newPos, 3f * Time.deltaTime);
+            //if (Vector3.SqrMagnitude(transform.position - _newPos) < 0.1f)
+            //    isJump = false;
 
-    public void TurnLeft()
-    {
-        transform.rotation = Quaternion.Euler(0, -45f, 0);
-    }
+            _animator.SetTrigger(hashJump);
+            transform.position += Vector3.up * 4;
+        }
 
-    public void TurnRight()
-    {
-        transform.rotation = Quaternion.Euler(0, 45f, 0);
-    }
+        public void SetMoveAnim(bool moving)
+        {
+            _animator.SetBool(hashMove, moving);
+        }
 
-    public void LookForward()
-    {
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        public void SetAnimSpeed(float speed)
+        {
+            _animator.speed = speed;
+        }
+
+        public void TurnAngle(float yAngle = 0)
+        {
+            _before = transform.rotation;
+            _new = Quaternion.Euler(0, yAngle, 0);
+        }
+
+        public void ResetTurn()
+        {
+            _before = Quaternion.Euler(0, 0, 0);
+            _new = _before;
+        }
     }
 }
