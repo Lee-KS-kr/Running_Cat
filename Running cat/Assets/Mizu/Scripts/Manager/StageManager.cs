@@ -27,5 +27,10 @@ namespace Mizu
             _road.StartEnding();
             _controller.OnEndingScene();
         }
+
+        public void StartGame()
+        {
+            Debug.Log("to do : StageManager startGame");
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace Mizu
         Juikjuik = 0,
         Naymnaym,
         Mayak,
+        CatTower,
     }
 
     public class Obstacle : MonoBehaviour

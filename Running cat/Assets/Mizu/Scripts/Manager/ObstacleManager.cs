@@ -37,6 +37,9 @@ namespace Mizu
                 case ObstacleType.Mayak:
                     anim.gameObject.transform.position = new Vector3(pos.x, 0, pos.z);
                     break;
+                case ObstacleType.CatTower:
+                    anim.gameObject.transform.rotation = Quaternion.Euler(0, 90f, 0);
+                    break;
                 default: break;
             }
         }
