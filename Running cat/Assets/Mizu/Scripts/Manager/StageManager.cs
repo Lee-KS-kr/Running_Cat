@@ -12,7 +12,7 @@ namespace Mizu
         private PlayerController _controller;
         private int _catCount = 0;
 
-        private void Start()
+        public void Initialize()
         {
             _goal = FindObjectOfType<Goal>();
             _cam = FindObjectOfType<TrackingCamera>();
@@ -38,6 +38,8 @@ namespace Mizu
         public void SetFinalCutscene()
         {
             _road.StartEnding(false);
+            _controller.OnFinalCutscene();
+            GameManager.Inst.UIMng.WinGame();
         }
 
         public void CountCat(int count)

@@ -34,9 +34,11 @@ namespace Mizu
         {
             if (other.gameObject.layer == _playerLayer)
             {
-                other.gameObject.GetComponent<PlayerCat>().enabled = false;
+                var obj = other.gameObject;
+                obj.transform.parent = this.transform;
+                obj.GetComponent<PlayerCat>().enabled = false;
                 _collider.enabled = false;
-                var anim = other.gameObject.GetComponent<Animator>();
+                var anim = obj.GetComponent<Animator>();
                 this.enabled = false;
                 _particle.SetActive(true);
                 changeAnimAction?.Invoke(anim, _type, gameObject.transform.position);

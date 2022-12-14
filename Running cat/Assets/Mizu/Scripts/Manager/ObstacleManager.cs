@@ -10,17 +10,13 @@ namespace Mizu
         [SerializeField] private Obstacle[] obstacles;
         [SerializeField] private CatTowerStep[] steps;
 
-        private void Start()
+        public void Initialize()
         {
             newCatAnim = Resources.Load<RuntimeAnimatorController>("Otter/Arts/Animations/NewCatAnim");
             obstacles = FindObjectsOfType<Obstacle>();
             steps = FindObjectsOfType<CatTowerStep>();
-            Init();
-        }
 
-        private void Init()
-        {
-            foreach(var ob in obstacles)
+            foreach (var ob in obstacles)
             {
                 ob.changeAnimAction -= SetCatBehaviour;
                 ob.changeAnimAction += SetCatBehaviour;
@@ -33,6 +29,7 @@ namespace Mizu
             }
         }
 
+        static int xylophone = (int)SoundManager.Sounds.XylophoneC1;
         private void SetCatBehaviour(Animator anim, ObstacleType type, Vector3 pos)
         {
             anim.runtimeAnimatorController = newCatAnim;
@@ -48,7 +45,10 @@ namespace Mizu
                     break;
                 case ObstacleType.CatTower:
                     anim.gameObject.transform.rotation = Quaternion.Euler(0, 90f, 0);
-                    GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Purr);
+                    GameManager.Inst.SoundMng.PlaySFX((SoundManager.Sounds)xylophone);
+                    xylophone++;
+                    if (xylophone >= 12)
+                        xylophone -= 8;
                     break;
                 default: break;
             }

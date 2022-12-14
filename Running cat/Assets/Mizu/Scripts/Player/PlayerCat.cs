@@ -44,8 +44,11 @@ namespace Mizu
                 obj.GetComponentInChildren<Renderer>().material = _mat;
                 GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Meow);
             }
+        }
 
-            if(collision.gameObject.layer == _catTowerLayer)
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.layer == _catTowerLayer)
             {
                 OnJump();
             }
@@ -54,7 +57,6 @@ namespace Mizu
         private void OnDisable()
         {
             gameObject.layer = _playingLayer;
-            gameObject.transform.parent = null;
             gameObject.GetComponent<Collider>().enabled = false;
             gameObject.GetComponent<Rigidbody>().useGravity = false;
         }

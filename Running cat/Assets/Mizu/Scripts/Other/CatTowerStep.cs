@@ -8,7 +8,7 @@ namespace Mizu
     public class CatTowerStep : MonoBehaviour
     {
         private int _playerLayer;
-        private bool isCatSit = false;
+        [SerializeField] private bool isCatSit;
 
         private ObstacleType _type = ObstacleType.CatTower;
         public Action<Animator, ObstacleType, Vector3> changeAnimAction;
@@ -16,22 +16,21 @@ namespace Mizu
         private void Start()
         {
             _playerLayer = LayerMask.NameToLayer("Player");
-            isCatSit = false;
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (collision.gameObject.layer == _playerLayer)
+            if (other.gameObject.layer == _playerLayer)
             {
                 if (isCatSit) return;
 
-                var obj = collision.gameObject;
+                var obj = other.gameObject;
                 isCatSit = true;
                 this.enabled = false;
                 obj.GetComponent<PlayerCat>().enabled = false;
                 obj.transform.parent = gameObject.transform;
-                obj.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-                var anim = collision.gameObject.GetComponent<Animator>();
+                obj.transform.position = gameObject.transform.position + new Vector3(0, -0.5f, 0f);
+                var anim = other.gameObject.GetComponent<Animator>();
                 changeAnimAction?.Invoke(anim, _type, gameObject.transform.position);
             }
         }

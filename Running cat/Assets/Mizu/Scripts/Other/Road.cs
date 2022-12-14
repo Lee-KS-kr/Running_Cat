@@ -11,7 +11,7 @@ namespace Mizu
         private void Update()
         {
             if (!isEnding) return;
-            transform.position += -transform.forward * 15f * Time.deltaTime;
+            transform.position += -transform.forward * 20f * Time.deltaTime;
         }
 
         public void StartEnding(bool isTrue)

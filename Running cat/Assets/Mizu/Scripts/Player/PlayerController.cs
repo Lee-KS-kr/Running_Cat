@@ -99,6 +99,12 @@ namespace Mizu
                 cat.SetAnimSpeed(4);
         }
 
+        public void OnFinalCutscene()
+        {
+            foreach (var cat in cats)
+                cat.SetMoveAnim(false);
+        }
+
         public void OnStart()
         {
             isStart = true;

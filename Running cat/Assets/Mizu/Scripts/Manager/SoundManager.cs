@@ -12,13 +12,21 @@ namespace Mizu
             Purr,
             Drink,
             Win,
+            XylophoneC1,
+            XylophoneD,
+            XylophoneE,
+            XylophoneF,
+            XylophoneG,
+            XylophoneA,
+            XylophoneB,
+            XylophoneC2,
         }
 
-        private Dictionary<Sounds, AudioClip> sfxDictionary = new Dictionary<Sounds, AudioClip>();
+        private Dictionary<Sounds, AudioClip> sfxDictionary;
         private AudioSource _audio;
         private AudioClip _clip = null;
 
-        private void Start()
+        public void Initialize()
         {
             _audio = gameObject.GetComponent<AudioSource>();
             LoadSounds();
@@ -26,14 +34,24 @@ namespace Mizu
 
         public void StartGame()
         {
-            Debug.Log("Todo : sound mng");
+            
         }
 
         private void LoadSounds()
         {
-            sfxDictionary.Add(Sounds.Meow, Resources.Load<AudioClip>("SFX/Cat_Meow"));
-            sfxDictionary.Add(Sounds.Purr, Resources.Load<AudioClip>("SFX/Cat_Purr"));
-            sfxDictionary.Add(Sounds.Win, Resources.Load<AudioClip>("/SFX/Cat_Win"));
+            sfxDictionary = new Dictionary<Sounds, AudioClip>();
+
+            sfxDictionary.Add(Sounds.Meow, Resources.Load<AudioClip>("SFX/Cat/Cat_Meow"));
+            sfxDictionary.Add(Sounds.Purr, Resources.Load<AudioClip>("SFX/Cat/Cat_Purr"));
+            sfxDictionary.Add(Sounds.Win, Resources.Load<AudioClip>("SFX/Cat/Cat_Win"));
+            sfxDictionary.Add(Sounds.XylophoneC1, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_C1"));
+            sfxDictionary.Add(Sounds.XylophoneD, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_D"));
+            sfxDictionary.Add(Sounds.XylophoneE, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_E"));
+            sfxDictionary.Add(Sounds.XylophoneF, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_F"));
+            sfxDictionary.Add(Sounds.XylophoneG, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_G"));
+            sfxDictionary.Add(Sounds.XylophoneA, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_A"));
+            sfxDictionary.Add(Sounds.XylophoneB, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_B"));
+            sfxDictionary.Add(Sounds.XylophoneC2, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_C2"));
         }
 
         public void PlaySFX(Sounds sfxType)
@@ -42,6 +60,11 @@ namespace Mizu
             if (null == _clip) return;
             _audio.PlayOneShot(_clip);
             _clip = null;
+        }
+
+        public void OnRestart()
+        {
+            sfxDictionary.Clear();
         }
     }
 }
