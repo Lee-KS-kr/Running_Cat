@@ -18,19 +18,19 @@ namespace Mizu
             _playerLayer = LayerMask.NameToLayer("Player");
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision collision)
         {
-            if (other.gameObject.layer == _playerLayer)
+            if (collision.gameObject.layer == _playerLayer)
             {
                 if (isCatSit) return;
 
-                var obj = other.gameObject;
+                var obj = collision.gameObject;
                 isCatSit = true;
                 this.enabled = false;
                 obj.GetComponent<PlayerCat>().enabled = false;
                 obj.transform.parent = gameObject.transform;
-                obj.transform.position = gameObject.transform.position + new Vector3(0, -0.5f, 0f);
-                var anim = other.gameObject.GetComponent<Animator>();
+                obj.transform.position = gameObject.transform.position;
+                var anim = collision.gameObject.GetComponent<Animator>();
                 changeAnimAction?.Invoke(anim, _type, gameObject.transform.position);
             }
         }

@@ -41,6 +41,7 @@ namespace Mizu
                     break;
                 case ObstacleType.Mayak:
                     anim.gameObject.transform.position = new Vector3(pos.x, 0, pos.z);
+                    anim.gameObject.transform.rotation = Quaternion.Euler(0, 180f, 0f);
                     GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Purr);
                     break;
                 case ObstacleType.CatTower:

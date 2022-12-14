@@ -44,11 +44,8 @@ namespace Mizu
                 obj.GetComponentInChildren<Renderer>().material = _mat;
                 GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Meow);
             }
-        }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if(other.gameObject.layer == _catTowerLayer)
+            if (collision.gameObject.layer == _catTowerLayer)
             {
                 OnJump();
             }
