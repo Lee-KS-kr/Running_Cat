@@ -1,13 +1,11 @@
 ﻿<Properties StartupConfiguration="{1B61093B-E44F-AF59-25F3-EB2014FDA113}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Mizu/Scripts/Manager/ObstacleManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Mizu/Scripts/Manager/SoundManager.cs">
     <Files>
       <File FileName="Assets/Mizu/Scripts/Manager/GameManager.cs" Line="61" Column="39" />
       <File FileName="Assets/Mizu/Scripts/Player/PlayerCat.cs" Line="52" Column="10" />
       <File FileName="Assets/Mizu/Scripts/Player/PlayerController.cs" Line="105" Column="40" />
-      <File FileName="Assets/Mizu/Scripts/Other/Road.cs" Line="13" Column="35" />
-      <File FileName="Assets/Mizu/Scripts/Manager/SoundManager.cs" Line="37" Column="13" />
-      <File FileName="Assets/Mizu/Scripts/Other/CatTowerStep.cs" Line="36" Column="10" />
-      <File FileName="Assets/Mizu/Scripts/Manager/ObstacleManager.cs" Line="44" Column="37" />
+      <File FileName="Assets/Mizu/Scripts/Other/GageUI.cs" Line="26" Column="10" />
+      <File FileName="Assets/Mizu/Scripts/Manager/SoundManager.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,10 +15,8 @@
               <Node name="Mizu" expanded="True">
                 <Node name="Scripts" expanded="True">
                   <Node name="Manager" expanded="True">
-                    <Node name="ObstacleManager.cs" selected="True" />
+                    <Node name="SoundManager.cs" selected="True" />
                   </Node>
-                  <Node name="Other" expanded="True" />
-                  <Node name="Player" expanded="True" />
                 </Node>
               </Node>
             </Node>

@@ -14,6 +14,7 @@ namespace Mizu
         [SerializeField] private GameObject _failedObj;
         [SerializeField] private GameObject _winObj;
         [SerializeField] private GameObject _ingameObj;
+        [SerializeField] private GageUI _gageUI;
 
         public void Initialize()
         {
@@ -22,6 +23,7 @@ namespace Mizu
             _failedObj = GameObject.Find("Failed");
             _winObj = GameObject.Find("Success");
             _ingameObj = GameObject.Find("InGame");
+            _gageUI = FindObjectOfType<GageUI>();
 
             _onboardingPanel.onClick.AddListener(GameManager.Inst.StartGame);
             _retryButton.onClick.AddListener(OnRetryButton);
@@ -36,6 +38,8 @@ namespace Mizu
         {
             _onboardingPanel.gameObject.SetActive(false);
             _ingameObj.SetActive(true);
+            _gageUI.SetDistance(GameManager.Inst.StageMng.Distance);
+            _gageUI.isStart = true;
         }
 
         public void FailedGame()

@@ -11,6 +11,7 @@ namespace Mizu
         private TrackingCamera _cam;
         private PlayerController _controller;
         private int _catCount = 0;
+        public float Distance { get; private set; }
 
         public void Initialize()
         {
@@ -20,6 +21,13 @@ namespace Mizu
             _road = FindObjectOfType<Road>();
             _goal.playerGoalAction = null;
             _goal.playerGoalAction += SetGoalIn;
+
+            Distance = Vector3.Distance(_goal.transform.position, _controller.transform.position);
+        }
+
+        private void Update()
+        {
+            Distance = Vector3.Distance(_goal.transform.position, _controller.transform.position);
         }
 
         private void SetGoalIn()

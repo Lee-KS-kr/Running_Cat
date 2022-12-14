@@ -10,6 +10,7 @@ namespace Mizu
         {
             Meow = 0,
             Purr,
+            Hiss,
             Drink,
             Win,
             XylophoneC1,
@@ -43,6 +44,8 @@ namespace Mizu
 
             sfxDictionary.Add(Sounds.Meow, Resources.Load<AudioClip>("SFX/Cat/Cat_Meow"));
             sfxDictionary.Add(Sounds.Purr, Resources.Load<AudioClip>("SFX/Cat/Cat_Purr"));
+            sfxDictionary.Add(Sounds.Hiss, Resources.Load<AudioClip>("SFX/Cat/Cat_Hiss"));
+            sfxDictionary.Add(Sounds.Drink, Resources.Load<AudioClip>("SFX/Cat/Cat_Drink"));
             sfxDictionary.Add(Sounds.Win, Resources.Load<AudioClip>("SFX/Cat/Cat_Win"));
             sfxDictionary.Add(Sounds.XylophoneC1, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_C1"));
             sfxDictionary.Add(Sounds.XylophoneD, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_D"));
