@@ -10,6 +10,7 @@ namespace Mizu
         private Road _road;
         private TrackingCamera _cam;
         private PlayerController _controller;
+        private int _catCount = 0;
 
         private void Start()
         {
@@ -24,13 +25,31 @@ namespace Mizu
         private void SetGoalIn()
         {
             _cam.isEnding = true;
-            _road.StartEnding();
+            _road.StartEnding(true);
             _controller.OnEndingScene();
         }
 
         public void StartGame()
         {
-            Debug.Log("to do : StageManager startGame");
+            _controller.OnStart();
+            GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Meow);
+        }
+
+        public void SetFinalCutscene()
+        {
+            _road.StartEnding(false);
+        }
+
+        public void CountCat(int count)
+        {
+            _catCount += count;
+            if (_catCount < 1)
+                SetFailedGame();
+        }
+
+        private void SetFailedGame()
+        {
+
         }
     }
 }

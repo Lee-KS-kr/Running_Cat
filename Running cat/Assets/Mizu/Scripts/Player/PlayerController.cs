@@ -10,6 +10,7 @@ namespace Mizu
         private Vector3 _dragVec = Vector3.zero;
         private float _turnAngle = 45f;
         private float _moveSpeed = 5f;
+        private bool isStart = false;
 
         private PlayerCat[] cats;
         private TrackingCamera _cam;
@@ -21,7 +22,9 @@ namespace Mizu
 
         private void Update()
         {
+            if (!isStart) return;
             GetCats();
+
             if (cats.Length < 1) return;
             SetCamPos();
             OnAutoMove();
@@ -94,6 +97,11 @@ namespace Mizu
             _moveSpeed = 0f;
             foreach (var cat in cats)
                 cat.SetAnimSpeed(4);
+        }
+
+        public void OnStart()
+        {
+            isStart = true;
         }
     }
 }

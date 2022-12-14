@@ -8,11 +8,13 @@ namespace Mizu
     {
         [SerializeField] private RuntimeAnimatorController newCatAnim;
         [SerializeField] private Obstacle[] obstacles;
+        [SerializeField] private CatTowerStep[] steps;
 
         private void Start()
         {
             newCatAnim = Resources.Load<RuntimeAnimatorController>("Otter/Arts/Animations/NewCatAnim");
             obstacles = FindObjectsOfType<Obstacle>();
+            steps = FindObjectsOfType<CatTowerStep>();
             Init();
         }
 
@@ -22,6 +24,12 @@ namespace Mizu
             {
                 ob.changeAnimAction -= SetCatBehaviour;
                 ob.changeAnimAction += SetCatBehaviour;
+            }
+
+            foreach (var st in steps)
+            {
+                st.changeAnimAction -= SetCatBehaviour;
+                st.changeAnimAction += SetCatBehaviour;
             }
         }
 
@@ -36,6 +44,7 @@ namespace Mizu
                     break;
                 case ObstacleType.Mayak:
                     anim.gameObject.transform.position = new Vector3(pos.x, 0, pos.z);
+                    GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Purr);
                     break;
                 case ObstacleType.CatTower:
                     anim.gameObject.transform.rotation = Quaternion.Euler(0, 90f, 0);

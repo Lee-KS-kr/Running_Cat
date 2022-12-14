@@ -14,9 +14,9 @@ namespace Mizu
             transform.position += -transform.forward * 15f * Time.deltaTime;
         }
 
-        public void StartEnding()
+        public void StartEnding(bool isTrue)
         {
-            isEnding = true;
+            isEnding = isTrue;
         }
     }
 }
