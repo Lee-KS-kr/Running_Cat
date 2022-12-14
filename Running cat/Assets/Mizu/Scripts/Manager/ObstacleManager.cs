@@ -48,6 +48,7 @@ namespace Mizu
                     break;
                 case ObstacleType.CatTower:
                     anim.gameObject.transform.rotation = Quaternion.Euler(0, 90f, 0);
+                    GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Purr);
                     break;
                 default: break;
             }
