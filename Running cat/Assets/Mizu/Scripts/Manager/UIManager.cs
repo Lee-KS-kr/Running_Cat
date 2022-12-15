@@ -16,6 +16,8 @@ namespace Mizu
         [SerializeField] private GameObject _ingameObj;
         [SerializeField] private GageUI _gageUI;
 
+        private bool isStart = false;
+
         public void Initialize()
         {
             _onboardingPanel = GameObject.Find("Start").GetComponent<Button>();
@@ -38,20 +40,36 @@ namespace Mizu
         {
             _onboardingPanel.gameObject.SetActive(false);
             _ingameObj.SetActive(true);
+            _gageUI.SetGoal(GameManager.Inst.StageMng.Distance - 4);
             _gageUI.SetDistance(GameManager.Inst.StageMng.Distance);
             _gageUI.isStart = true;
+            isStart = true;
+        }
+
+        private void Update()
+        {
+            if (!isStart) return;
+            _gageUI.SetDistance(GameManager.Inst.StageMng.Distance);
         }
 
         public void FailedGame()
         {
+            isStart = false;
             _failedObj.SetActive(true);
             _retryButton.gameObject.SetActive(true);
         }
 
         public void WinGame()
         {
+            isStart = false;
             _winObj.SetActive(true);
             _retryButton.gameObject.SetActive(true);
+        }
+
+        public void OnGoalIn()
+        {
+            isStart = false;
+            _gageUI.gameObject.SetActive(false);
         }
 
         private void OnRetryButton()

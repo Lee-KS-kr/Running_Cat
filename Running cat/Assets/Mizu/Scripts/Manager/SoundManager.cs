@@ -21,6 +21,7 @@ namespace Mizu
             XylophoneA,
             XylophoneB,
             XylophoneC2,
+            Grunt,
         }
 
         private Dictionary<Sounds, AudioClip> sfxDictionary;
@@ -55,6 +56,7 @@ namespace Mizu
             sfxDictionary.Add(Sounds.XylophoneA, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_A"));
             sfxDictionary.Add(Sounds.XylophoneB, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_B"));
             sfxDictionary.Add(Sounds.XylophoneC2, Resources.Load<AudioClip>("SFX/Xylophone/Xylophone_C2"));
+            sfxDictionary.Add(Sounds.Grunt, Resources.Load<AudioClip>("SFX/Cat/Cat_Grunt"));
         }
 
         public void PlaySFX(Sounds sfxType)

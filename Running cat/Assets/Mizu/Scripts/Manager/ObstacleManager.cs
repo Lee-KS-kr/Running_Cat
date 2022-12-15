@@ -36,8 +36,10 @@ namespace Mizu
             switch (type)
             {
                 case ObstacleType.Juikjuik:
+                    GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Hiss);
                     break;
                 case ObstacleType.Naymnaym:
+                    GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Drink);
                     break;
                 case ObstacleType.Mayak:
                     anim.gameObject.transform.position = new Vector3(pos.x, 0, pos.z);
@@ -48,8 +50,8 @@ namespace Mizu
                     anim.gameObject.transform.rotation = Quaternion.Euler(0, 90f, 0);
                     GameManager.Inst.SoundMng.PlaySFX((SoundManager.Sounds)xylophone);
                     xylophone++;
-                    if (xylophone >= 12)
-                        xylophone -= 8;
+                    if (xylophone >= 13)
+                        xylophone = 13;
                     break;
                 default: break;
             }

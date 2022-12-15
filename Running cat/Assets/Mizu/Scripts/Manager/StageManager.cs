@@ -12,6 +12,7 @@ namespace Mizu
         private PlayerController _controller;
         private int _catCount = 0;
         public float Distance { get; private set; }
+        private bool isGameStart = false;
 
         public void Initialize()
         {
@@ -27,6 +28,7 @@ namespace Mizu
 
         private void Update()
         {
+            if (!isGameStart) return;
             Distance = Vector3.Distance(_goal.transform.position, _controller.transform.position);
         }
 
@@ -35,12 +37,15 @@ namespace Mizu
             _cam.isEnding = true;
             _road.StartEnding(true);
             _controller.OnEndingScene();
+            isGameStart = false;
+            GameManager.Inst.UIMng.OnGoalIn();
         }
 
         public void StartGame()
         {
             _controller.OnStart();
             GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Meow);
+            isGameStart = true;
         }
 
         public void SetFinalCutscene()
@@ -59,7 +64,8 @@ namespace Mizu
 
         private void SetFailedGame()
         {
-
+            _controller.OnFailedGame();
+            GameManager.Inst.UIMng.FailedGame();
         }
     }
 }

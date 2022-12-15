@@ -11,6 +11,7 @@ namespace Mizu
         private float _turnAngle = 45f;
         private float _moveSpeed = 5f;
         private bool isStart = false;
+        private bool isEnding = false;
 
         private PlayerCat[] cats;
         private TrackingCamera _cam;
@@ -23,6 +24,7 @@ namespace Mizu
         private void Update()
         {
             if (!isStart) return;
+            if (isEnding) return;
             GetCats();
 
             if (cats.Length < 1) return;
@@ -38,6 +40,7 @@ namespace Mizu
 
         private void SetCamPos()
         {
+            if (isEnding) return;
             if (cats.Length == 1)
                 _cam.SetPlayer(cats[0].transform.position);
             else
@@ -51,6 +54,17 @@ namespace Mizu
             }
         }
 
+        private void SetEndingCamPos()
+        {
+
+        }
+
+        private void OnEndingMove()
+        {
+            GetCats();
+            
+        }
+
         private void OnAutoMove()
         {
             transform.position += transform.forward * Time.deltaTime * _moveSpeed;
@@ -60,6 +74,8 @@ namespace Mizu
 
         private void OnDrag()
         {
+            if (_moveSpeed == 0f) return;
+
             if (Input.GetMouseButtonDown(0))
             {
                 _inputVec = Input.mousePosition;
@@ -74,14 +90,14 @@ namespace Mizu
                     foreach (var cat in cats)
                         cat.TurnAngle(-_turnAngle);
 
-                    transform.position += -transform.right * Time.deltaTime * 10f;
+                    transform.position += -transform.right * Time.deltaTime * (_moveSpeed * 2);
                 }
                 else if (dir > 0f)
                 {
                     foreach (var cat in cats)
                         cat.TurnAngle(_turnAngle);
 
-                    transform.position += transform.right * Time.deltaTime * 10f;
+                    transform.position += transform.right * Time.deltaTime * (_moveSpeed * 2);
                 }
             }
 
@@ -101,8 +117,14 @@ namespace Mizu
 
         public void OnFinalCutscene()
         {
+            GetCats();
             foreach (var cat in cats)
                 cat.SetMoveAnim(false);
+        }
+
+        public void OnFailedGame()
+        {
+            isStart = false;
         }
 
         public void OnStart()

@@ -17,15 +17,20 @@ namespace Mizu
             _gage.fillAmount = 0f;
         }
 
-        public void SetDistance(float goalPos)
+        public void SetGoal(float goalDis)
         {
-            _distance = goalPos;
+            _distance = goalDis;
+        }
+
+        public void SetDistance(float nowDis)
+        {
+            _now = Mathf.Clamp(1 - (nowDis / _distance), 0f, 1f);
         }
 
         private void Update()
         {
             if (!isStart) return;
-            _now = Mathf.Clamp(_distance - GameManager.Inst.StageMng.Distance, 0f, 1f);
+
             _gage.fillAmount = _now;
         }
     }

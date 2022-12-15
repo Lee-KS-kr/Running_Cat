@@ -23,7 +23,8 @@ namespace Mizu
             _playingLayer = LayerMask.NameToLayer("Playing");
             _strayLayer = LayerMask.NameToLayer("Stray");
             _catTowerLayer = LayerMask.NameToLayer("CatTower");
-            _mat = Resources.Load<Material>("Otter/Arts/Texture/NewCat");
+
+            _mat = Resources.Load<Material>("Otter/Arts/Materials/NewCat");
             _animator = gameObject.GetComponent<Animator>();
         }
 
@@ -47,7 +48,8 @@ namespace Mizu
 
             if (collision.gameObject.layer == _catTowerLayer)
             {
-                OnJump();
+                int jumpHeight = (int)collision.gameObject.GetComponent<CatTowerStep>().thisStep;
+                OnJump(jumpHeight);
             }
         }
 
@@ -56,13 +58,14 @@ namespace Mizu
             gameObject.layer = _playingLayer;
             gameObject.GetComponent<Collider>().enabled = false;
             gameObject.GetComponent<Rigidbody>().useGravity = false;
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
         }
 
-        private void OnJump()
+        private void OnJump(int height)
         {
             if (!this.enabled) return;
             _animator?.SetTrigger(hashJump);
-            transform.position += Vector3.up * 4;
+            transform.position += Vector3.up * height;
         }
 
         public void SetMoveAnim(bool moving)

@@ -5,10 +5,17 @@ using UnityEngine;
 
 namespace Mizu
 {
+    public enum TowerStep
+    {
+        Floors = 3,
+        GroundFloor = 5,
+    }
+
     public class CatTowerStep : MonoBehaviour
     {
         private int _playerLayer;
         [SerializeField] private bool isCatSit;
+        public TowerStep thisStep = TowerStep.Floors;
 
         private ObstacleType _type = ObstacleType.CatTower;
         public Action<Animator, ObstacleType, Vector3> changeAnimAction;
