@@ -34,6 +34,7 @@ namespace Mizu
         {
             if (other.gameObject.layer == _playerLayer)
             {
+                GameManager.Inst.StageMng.CountCat(-1);
                 var obj = other.gameObject;
                 obj.transform.parent = this.transform;
                 obj.GetComponent<PlayerCat>().enabled = false;

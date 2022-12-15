@@ -13,7 +13,7 @@ namespace Mizu
         private bool isStart = false;
         private bool isEnding = false;
 
-        private PlayerCat[] cats;
+        [SerializeField] private PlayerCat[] cats;
         private TrackingCamera _cam;
 
         private void Start()
@@ -24,7 +24,6 @@ namespace Mizu
         private void Update()
         {
             if (!isStart) return;
-            if (isEnding) return;
             GetCats();
 
             if (cats.Length < 1) return;
@@ -40,7 +39,25 @@ namespace Mizu
 
         private void SetCamPos()
         {
-            if (isEnding) return;
+            if (isEnding)
+            {
+                var pos = cats[0].transform.position;
+                var str = cats[0].gameObject.name;
+
+                for (int i = 0; i < cats.Length; i++)
+                {
+                    if (cats[i].transform.position.z <= pos.z)
+                    {
+                        pos = cats[i].transform.position;
+                        str = cats[i].gameObject.name;
+                    }
+                }
+
+                pos += new Vector3(0, 0, 2);
+                _cam.SetPlayer(pos);
+                return;
+            }
+
             if (cats.Length == 1)
                 _cam.SetPlayer(cats[0].transform.position);
             else
@@ -85,18 +102,29 @@ namespace Mizu
             {
                 _dragVec = Input.mousePosition;
                 var dir = _dragVec.x - _inputVec.x;
+                float posX = cats[0].transform.position.x;
                 if (dir < 0f)
                 {
-                    foreach (var cat in cats)
-                        cat.TurnAngle(-_turnAngle);
+                    for(int i = 0; i < cats.Length; i++)
+                    {
+                        cats[i].TurnAngle(-_turnAngle);
+                        if (cats[i].transform.position.x <= posX)
+                            posX = cats[i].transform.position.x;
+                    }
 
+                    if (posX <= -6f) return;
                     transform.position += -transform.right * Time.deltaTime * (_moveSpeed * 2);
                 }
                 else if (dir > 0f)
                 {
-                    foreach (var cat in cats)
-                        cat.TurnAngle(_turnAngle);
+                    for (int i = 0; i < cats.Length; i++)
+                    {
+                        cats[i].TurnAngle(_turnAngle);
+                        if (cats[i].transform.position.x >= posX)
+                            posX = cats[i].transform.position.x;
+                    }
 
+                    if (posX >= 6f) return;
                     transform.position += transform.right * Time.deltaTime * (_moveSpeed * 2);
                 }
             }
@@ -110,9 +138,13 @@ namespace Mizu
 
         public void OnEndingScene()
         {
+            isEnding = true;
             _moveSpeed = 0f;
             foreach (var cat in cats)
-                cat.SetAnimSpeed(4);
+            {
+                cat.SetAnimSpeed(2);
+                cat.ChangeAnimClip();
+            }
         }
 
         public void OnFinalCutscene()

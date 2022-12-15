@@ -10,7 +10,7 @@ namespace Mizu
         private Road _road;
         private TrackingCamera _cam;
         private PlayerController _controller;
-        private int _catCount = 0;
+        [SerializeField] private int _catCount = 0;
         public float Distance { get; private set; }
         private bool isGameStart = false;
 
@@ -44,6 +44,7 @@ namespace Mizu
         public void StartGame()
         {
             _controller.OnStart();
+            _catCount = 1;
             GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Meow);
             isGameStart = true;
         }

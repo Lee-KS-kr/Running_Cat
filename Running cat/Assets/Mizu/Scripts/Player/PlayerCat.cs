@@ -12,6 +12,7 @@ namespace Mizu
 
         private int hashMove = Animator.StringToHash("isMove");
         private int hashJump = Animator.StringToHash("onJump");
+        private int hashRun = Animator.StringToHash("isRun");
 
         [SerializeField] private Material _mat;
         private Animator _animator;
@@ -37,6 +38,7 @@ namespace Mizu
         {
             if (collision.gameObject.layer == _strayLayer)
             {
+                GameManager.Inst.StageMng.CountCat(1);
                 var obj = collision.gameObject;
                 obj.layer = gameObject.layer;
                 obj.transform.parent = gameObject.transform.parent;
@@ -76,6 +78,12 @@ namespace Mizu
         public void SetAnimSpeed(float speed)
         {
             _animator.speed = speed;
+        }
+
+        public void ChangeAnimClip()
+        {
+            _animator.SetBool(hashMove, false);
+            _animator.SetBool(hashRun, true);
         }
 
         public void TurnAngle(float yAngle = 0)

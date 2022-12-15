@@ -15,6 +15,8 @@ namespace Mizu
         [SerializeField] private GameObject _winObj;
         [SerializeField] private GameObject _ingameObj;
         [SerializeField] private GageUI _gageUI;
+        [SerializeField] private JellyUI _jellyUI;
+        public JellyUI JellyUI => _jellyUI;
 
         private bool isStart = false;
 
@@ -26,6 +28,7 @@ namespace Mizu
             _winObj = GameObject.Find("Success");
             _ingameObj = GameObject.Find("InGame");
             _gageUI = FindObjectOfType<GageUI>();
+            _jellyUI = FindObjectOfType<JellyUI>();
 
             _onboardingPanel.onClick.AddListener(GameManager.Inst.StartGame);
             _retryButton.onClick.AddListener(OnRetryButton);
