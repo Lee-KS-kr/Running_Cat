@@ -32,7 +32,9 @@ namespace Mizu
                 obj.GetComponent<PlayerCat>().enabled = false;
                 obj.transform.position = transform.position;
                 obj.transform.parent = this.transform;
-                obj.transform.rotation = Quaternion.LookRotation(binBox.transform.position);
+
+                var dir = binBox.transform.position - obj.transform.position;
+                obj.transform.rotation = Quaternion.LookRotation(dir);
                 obj.layer = _winLayer;
                 var anim = obj.GetComponent<Animator>();
 

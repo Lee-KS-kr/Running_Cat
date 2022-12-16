@@ -70,5 +70,10 @@ namespace Mizu
                 default: break;
             }
         }
+
+        public void OnRestart()
+        {
+            xylophone = (int)SoundManager.Sounds.XylophoneC1;
+        }
     }
 }

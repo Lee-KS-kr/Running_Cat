@@ -59,6 +59,7 @@ namespace Mizu
         public void RestartGame()
         {
             _soundManager.OnRestart();
+            _obstacleManager.OnRestart();
             SceneManager.LoadScene(0);
         }
     }
