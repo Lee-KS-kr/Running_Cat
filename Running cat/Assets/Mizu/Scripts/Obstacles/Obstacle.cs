@@ -11,6 +11,7 @@ namespace Mizu
         Naymnaym,
         Mayak,
         CatTower,
+        FinalBox,
     }
 
     public class Obstacle : MonoBehaviour

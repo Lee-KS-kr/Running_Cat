@@ -12,6 +12,8 @@ namespace Mizu
         private float _moveSpeed = 5f;
         private bool isStart = false;
         private bool isEnding = false;
+        private bool isFinal = false;
+        public int CatCount { get => cats.Length; }
 
         [SerializeField] private PlayerCat[] cats;
         private TrackingCamera _cam;
@@ -23,6 +25,12 @@ namespace Mizu
 
         private void Update()
         {
+            if(isFinal)
+            {
+                MoveToFinalCutscene();
+                return;
+            }
+
             if (!isStart) return;
             GetCats();
 
@@ -71,19 +79,9 @@ namespace Mizu
             }
         }
 
-        private void SetEndingCamPos()
-        {
-
-        }
-
-        private void OnEndingMove()
-        {
-            GetCats();
-            
-        }
-
         private void OnAutoMove()
         {
+            if (_moveSpeed == 0f) return;
             transform.position += transform.forward * Time.deltaTime * _moveSpeed;
             foreach (var cat in cats)
                 cat.SetMoveAnim(true);
@@ -151,7 +149,24 @@ namespace Mizu
         {
             GetCats();
             foreach (var cat in cats)
+            {
                 cat.SetMoveAnim(false);
+                cat.SetAnimSpeed(0.5f);
+            }
+
+            isFinal = true;
+        }
+
+        private void MoveToFinalCutscene()
+        {
+            var boxes = GameManager.Inst.StageMng.FinalCut.BoxesPos;
+            for(int i = 0; i < cats.Length; i++)
+            {
+                cats[i].transform.LookAt(boxes[i].transform);
+                var dir = boxes[i].transform.position - cats[i].transform.position;
+                dir.Normalize();
+                cats[i].transform.position += dir * 5 * Time.deltaTime;
+            }
         }
 
         public void OnFailedGame()

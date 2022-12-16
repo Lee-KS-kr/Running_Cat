@@ -67,6 +67,11 @@ namespace Mizu
             _clip = null;
         }
 
+        public void OnMute(bool onOff)
+        {
+            _audio.mute = onOff;
+        }
+
         public void OnRestart()
         {
             sfxDictionary.Clear();

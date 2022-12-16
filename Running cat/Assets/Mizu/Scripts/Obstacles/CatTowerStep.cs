@@ -36,7 +36,7 @@ namespace Mizu
                 this.enabled = false;
                 obj.GetComponent<PlayerCat>().enabled = false;
                 obj.transform.parent = gameObject.transform;
-                obj.transform.position = gameObject.transform.position;
+                obj.transform.position = gameObject.transform.position + (Vector3.up * 0.3f);
                 var anim = collision.gameObject.GetComponent<Animator>();
                 changeAnimAction?.Invoke(anim, _type, gameObject.transform.position);
             }

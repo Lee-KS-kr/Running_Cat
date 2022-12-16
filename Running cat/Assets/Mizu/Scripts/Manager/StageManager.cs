@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace Mizu
 {
@@ -10,6 +11,10 @@ namespace Mizu
         private Road _road;
         private TrackingCamera _cam;
         private PlayerController _controller;
+        private FinalCutScene _finalCut;
+        public FinalCutScene FinalCut => _finalCut;
+        private PlayableDirector _director;
+
         [SerializeField] private int _catCount = 0;
         public float Distance { get; private set; }
         private bool isGameStart = false;
@@ -19,7 +24,9 @@ namespace Mizu
             _goal = FindObjectOfType<Goal>();
             _cam = FindObjectOfType<TrackingCamera>();
             _controller = FindObjectOfType<PlayerController>();
+            _finalCut = FindObjectOfType<FinalCutScene>();
             _road = FindObjectOfType<Road>();
+            _director = FindObjectOfType<PlayableDirector>();
             _goal.playerGoalAction = null;
             _goal.playerGoalAction += SetGoalIn;
 
@@ -38,6 +45,10 @@ namespace Mizu
             _road.StartEnding(true);
             _controller.OnEndingScene();
             isGameStart = false;
+
+            var cats = _controller.CatCount - 9;
+            _finalCut?.SetBoxCount(cats);
+            _finalCut?.gameObject.SetActive(true);
             GameManager.Inst.UIMng.OnGoalIn();
         }
 
@@ -47,13 +58,16 @@ namespace Mizu
             _catCount = 1;
             GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Meow);
             isGameStart = true;
+            _finalCut.gameObject.SetActive(false);
         }
 
         public void SetFinalCutscene()
         {
             _road.StartEnding(false);
             _controller.OnFinalCutscene();
-            GameManager.Inst.UIMng.WinGame();
+            _cam.SetFinal();
+            //GameManager.Inst.UIMng.WinGame();
+            _director.Play();
         }
 
         public void CountCat(int count)

@@ -9,6 +9,7 @@ namespace Mizu
         [SerializeField] private RuntimeAnimatorController newCatAnim;
         [SerializeField] private Obstacle[] obstacles;
         [SerializeField] private CatTowerStep[] steps;
+        [SerializeField] private FinalBox[] boxes;
 
         public void Initialize()
         {
@@ -29,6 +30,16 @@ namespace Mizu
             }
         }
 
+        public void AddNewObstacle(FinalBox[] finalBoxes)
+        {
+            boxes = finalBoxes;
+            foreach(var box in boxes)
+            {
+                box.changeAnimAction -= SetCatBehaviour;
+                box.changeAnimAction += SetCatBehaviour;
+            }
+        }
+
         static int xylophone = (int)SoundManager.Sounds.XylophoneC1;
         private void SetCatBehaviour(Animator anim, ObstacleType type, Vector3 pos)
         {
@@ -42,7 +53,7 @@ namespace Mizu
                     GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Drink);
                     break;
                 case ObstacleType.Mayak:
-                    anim.gameObject.transform.position = new Vector3(pos.x, 0, pos.z);
+                    anim.gameObject.transform.position = new Vector3(pos.x, pos.y + 0.75f, pos.z);
                     anim.gameObject.transform.rotation = Quaternion.Euler(0, 180f, 0f);
                     GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Purr);
                     break;
@@ -52,6 +63,9 @@ namespace Mizu
                     xylophone++;
                     if (xylophone >= 13)
                         xylophone = 13;
+                    break;
+                case ObstacleType.FinalBox:
+                    GameManager.Inst.SoundMng.PlaySFX(SoundManager.Sounds.Purr);
                     break;
                 default: break;
             }
